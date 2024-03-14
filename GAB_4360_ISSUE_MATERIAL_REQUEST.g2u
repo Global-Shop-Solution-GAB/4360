@@ -606,14 +606,15 @@ F.Intrinsic.Control.Try
 		F.Intrinsic.String.Concat(V.Caller.FilesDir,"\",V.Local.sParam,V.Local.sFileName)
 		
 		V.Local.sPart.Set(V.DataTable.dtRequest(V.Global.iReq).Part!FieldValTrim)
-	'	F.Intrinsic.String.Len(V.Local.sPart,V.Local.iLen)
-	'	
-	'	F.Intrinsic.Control.If(V.Local.iLen,>,17)
-	'		F.Intrinsic.String.Mid(V.Local.sPart,17,V.Local.sRev)
-	'		F.Intrinsic.String.Left(V.Local.sPart,17,V.Local.sPart)
-	'	F.Intrinsic.Control.Else
-	'		V.Local.sRev.Set("")
-	'	F.Intrinsic.Control.EndIf
+		
+		F.Intrinsic.String.Len(V.Local.sPart,V.Local.iLen)
+		
+		F.Intrinsic.Control.If(V.Local.iLen,>,17)
+			F.Intrinsic.String.Mid(V.Local.sPart,17,V.Local.sRev)
+			F.Intrinsic.String.Left(V.Local.sPart,17,V.Local.sPart)
+		F.Intrinsic.Control.Else
+			V.Local.sRev.Set("")
+		F.Intrinsic.Control.EndIf
 		
 		F.Intrinsic.String.Format(V.Args.fIssue,"0.0000",V.Local.sQtyIssue)
 		
@@ -627,7 +628,7 @@ F.Intrinsic.Control.Try
 		F.Intrinsic.String.Concat(V.Local.sTranTimeBegin,"00",V.Local.sTranTimeBegin)
 	
 		'Preparing the file format
-		F.Data.DataTable.AddRow("450100","Part",V.DataTable.dtRequest(V.Global.iReq).Part!FieldValTrim,"Location",V.DataTable.dtRequest(V.Global.iReq).Loc!FieldValTrim,"Quantity",V.Local.sQtyIssue,"Lot",V.Local.sLot.Trim,"Bin",V.Local.sBin.Trim,"Heat",V.Local.sHeat.Trim,"Serial",V.Local.sSerial.Trim,"WONumber",V.DataTable.dtRequest(V.Global.iReq).Job!FieldValTrim,"WOSuffix",V.DataTable.dtRequest(V.Global.iReq).Suffix!FieldValTrim,"WOSeq",V.DataTable.dtRequest(V.Global.iReq).Sequence!FieldValTrim)
+		F.Data.DataTable.AddRow("450100","Part",V.Local.sPart.Trim,"Rev",V.Local.sRev.Trim,"Location",V.DataTable.dtRequest(V.Global.iReq).Loc!FieldValTrim,"Quantity",V.Local.sQtyIssue,"Lot",V.Local.sLot.Trim,"Bin",V.Local.sBin.Trim,"Heat",V.Local.sHeat.Trim,"Serial",V.Local.sSerial.Trim,"WONumber",V.DataTable.dtRequest(V.Global.iReq).Job!FieldValTrim,"WOSuffix",V.DataTable.dtRequest(V.Global.iReq).Suffix!FieldValTrim,"WOSeq",V.DataTable.dtRequest(V.Global.iReq).Sequence!FieldValTrim)
 		F.Intrinsic.Control.CallSub(450100Sync)
 	'	F.Intrinsic.String.Concat(V.Local.sPart.Trim,",",V.Local.sRev.Trim,",",V.DataTable.dtRequest(V.Global.iReq).Loc!FieldValTrim,",",V.Local.sQtyIssue.Trim,",",V.Local.sLot.Trim,",",V.Local.sBin.Trim,",",V.Local.sHeat.Trim,V.Local.sFile)
 	'	F.Intrinsic.String.Concat(V.Local.sFile,",",V.Local.sSerial.Trim,",",V.DataTable.dtRequest(V.Global.iReq).Job!FieldValTrim,",",V.DataTable.dtRequest(V.Global.iReq).Suffix!FieldValTrim,",",V.DataTable.dtRequest(V.Global.iReq).Sequence!FieldValTrim,V.Local.sFile)
@@ -1028,6 +1029,16 @@ F.Intrinsic.Control.If(V.Local.fTotal,>,0)
 		F.Intrinsic.String.LPad(V.Global.iBISeq,"0",9,V.Local.sSeq)
 		F.Intrinsic.String.DateString(V.Ambient.Date,V.Local.sDate)
 		V.Local.sPart.Set(V.DataTable.dtRequest(V.Global.iReq).Part!FieldValTrim)
+		
+		F.Intrinsic.String.Len(V.Local.sPart,V.Local.iLen)
+		
+		F.Intrinsic.Control.If(V.Local.iLen,>,17)
+			F.Intrinsic.String.Mid(V.Local.sPart,17,V.Local.sRev)
+			F.Intrinsic.String.Left(V.Local.sPart,17,V.Local.sPart)
+		F.Intrinsic.Control.Else
+			V.Local.sRev.Set("")
+		F.Intrinsic.Control.EndIf
+		
 		F.Intrinsic.String.Left(V.DataTable.dtRequest(V.Global.iReq).Description!FieldValTrim,30,V.Local.sDescription)
 		F.Intrinsic.String.Format(V.Local.fTotal,"#,0.0000",V.Local.sQtyIssue)
 		F.Intrinsic.String.Build("insert into BI_SF_AUDIT(trmnl, rptid, sequence, rec_type, trans, job, suffix, category, descr, reference, tran_date, qty_1, heading) values('{0}','001862','{1}','L','02','{2}','{3}','{4}','{5}','{6}','{7}',{8},'Audit Trail for Issue of Materials to Work Orders')",V.Caller.Terminal,V.Local.sSeq.Trim,V.DataTable.dtRequest(V.Global.iReq).Job!FieldValTrim,V.DataTable.dtRequest(V.Global.iReq).Suffix!FieldValTrim,V.DataTable.dtRequest(V.Global.iReq).Sequence!FieldValTrim,V.Local.sDescription.PSQLFriendly,V.Local.sPart.PSQLFriendly,V.Local.sDate.Trim,V.Local.fTotal,V.Local.sQuery)
@@ -1050,7 +1061,7 @@ F.Intrinsic.Control.If(V.Local.fTotal,>,0)
 				F.Intrinsic.String.Format(V.Ambient.Now,"HhNnSs",V.Local.sTranTimeBegin)
 				F.Intrinsic.String.Concat(V.Local.sTranTimeBegin,"00",V.Local.sTranTimeBegin)
 				
-				F.Data.DataTable.AddRow("450100","Part",V.DataTable.dtRequest(V.Global.iReq).Part!FieldValTrim,"Location",V.DataTable.dtRequest(V.Global.iReq).Loc!FieldValTrim,"Quantity",V.Local.sQtyIssue,"Lot",V.Local.sLot.Trim,"Bin",V.Local.sBin.Trim,"Heat",V.Local.sHeat.Trim,"Serial",V.Local.sSerial.Trim,"WONumber",V.DataTable.dtRequest(V.Global.iReq).Job!FieldValTrim,"WOSuffix",V.DataTable.dtRequest(V.Global.iReq).Suffix!FieldValTrim,"WOSeq",V.DataTable.dtRequest(V.Global.iReq).Sequence!FieldValTrim)
+				F.Data.DataTable.AddRow("450100","Part",V.Local.sPart.Trim,"Rev",V.Local.sRev.Trim,"Location",V.DataTable.dtRequest(V.Global.iReq).Loc!FieldValTrim,"Quantity",V.Local.sQtyIssue,"Lot",V.Local.sLot.Trim,"Bin",V.Local.sBin.Trim,"Heat",V.Local.sHeat.Trim,"Serial",V.Local.sSerial.Trim,"WONumber",V.DataTable.dtRequest(V.Global.iReq).Job!FieldValTrim,"WOSuffix",V.DataTable.dtRequest(V.Global.iReq).Suffix!FieldValTrim,"WOSeq",V.DataTable.dtRequest(V.Global.iReq).Sequence!FieldValTrim)
 
 				F.Intrinsic.Control.CallSub(450100Sync)
 '				'Preparing file name to be called by callwrapper
@@ -1435,5 +1446,5 @@ Program.Sub.Comments.Start
 ${$0$}$Issue Material Request$}$MHERTANTO$}$20/6/2017 11:12:57 PM$}$True
 ${$3$}$0$}$$}$0$}$-1$}$$}$12:00:00 AM$}$This program is to be used by warehouse staff to process issue request made by production staffs. The request is submitted through another interface (GAB_4360_MATERIAL_REQUEST.g2u)
 ${$5$}$2.0.0.0$}$2
-${$6$}$tdjohan$}$20230417140918576$}$8rAQhOSvlohpQhMDm1j544LwmwXnRbkh/O4yjWBAUo5kxEMpGh9Vhmh0VGdzzjIFXREYoj+uJVs=
+${$6$}$dyunus$}$20240314110926029$}$xZ6SHi8g7O0Qsxe6AiO2NH3PnOKQRy0TsQ8KcKnknQS/8BLjCbwhI3OQhaA1W1F/RT7aXOvPeo0=
 Program.Sub.Comments.End
