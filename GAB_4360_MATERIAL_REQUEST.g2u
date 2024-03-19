@@ -974,6 +974,8 @@ V.Local.sRows.Declare
 V.Local.sRet.Declare
 V.Local.sSuffix.Declare
 
+F.Intrinsic.Control.BlockEvents
+
 V.Local.iSeq.Set(1)
 
 F.Data.DataTable.Clone("dtOpen$dtLine","dtOLine",True)
@@ -1058,6 +1060,9 @@ F.Intrinsic.Control.EndIf
 F.Data.DataTable.Merge("dtOLine","dtOpen$dtLine",True,1)
 F.Data.DataTable.Close("dtOLine")
 V.Global.iID.Set(0)
+
+F.Intrinsic.Control.UnBlockEvents
+
 Program.Sub.SubmitRequest.End
 
 Program.Sub.BookRequestID.Start
@@ -1297,6 +1302,8 @@ V.Local.sRow.Declare
 V.Local.sTitles.Declare
 V.Local.sUpdate.Declare
 
+F.Intrinsic.Control.BlockEvents
+
 F.Intrinsic.String.Format(V.Ambient.Now,"YYYY-MM-DD HH:NN:SS",V.Local.sUpdate)
 F.Intrinsic.Control.If(V.Args.Column,=,"Close")
 	F.Intrinsic.String.Build("update ina_mat_req_line set status = 1 where req_id = {0} and req_seq = {1}",V.DataTable.dtOpen$dtLine(V.Args.RowIndex).ReqID!FieldValLong,V.DataTable.dtOpen$dtLine(V.Args.RowIndex).ReqSeq!FieldValLong,V.Local.sQuery)
@@ -1344,6 +1351,9 @@ F.Intrinsic.Control.ElseIf(V.Args.Column,=,"Print")
 		F.Global.BI.PrintReport(V.Global.iReportID,16,V.Local.sBIParam,V.Local.sBIParamVal,"GSView",True)
 	F.Intrinsic.Control.EndIf
 F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.UnBlockEvents
+
 Program.Sub.gvLine_ButtonClick.End
 
 Program.Sub.gvLine2_ButtonClick.Start
@@ -1354,6 +1364,8 @@ V.Local.sQuery.Declare
 V.Local.sRet.Declare
 V.Local.sRow.Declare
 V.Local.sUpdate.Declare
+
+F.Intrinsic.Control.BlockEvents
 
 F.Intrinsic.Control.If(V.Args.Column,=,"Reopen")
 	F.Intrinsic.String.Format(V.Ambient.Now,"YYYY-MM-DD HH:NN:SS",V.Local.sUpdate)
@@ -1389,6 +1401,8 @@ F.Intrinsic.Control.ElseIf(V.Args.Column,=,"Print")
 		F.Global.BI.PrintReport(V.Global.iReportID,16,V.Local.sBIParam,V.Local.sBIParamVal,"GSView",True)
 	F.Intrinsic.Control.EndIf
 F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.UnBlockEvents
 Program.Sub.gvLine2_ButtonClick.End
 
 Program.Sub.gvLine2_ChangeValue.Start
@@ -1459,5 +1473,5 @@ Program.Sub.Comments.Start
 ${$0$}$Material Request for Issuance$}$MHERTANTO$}$20/6/2017 11:15:49 PM$}$False
 ${$3$}$0$}$$}$0$}$-1$}$$}$12:00:00 AM$}$This program is used by production staff to input issue material request and the request would later be processed by warehouse staff using a different interface.
 ${$5$}$2.0.0.0$}$2
-${$6$}$tdjohan$}$20230703115839128$}$8rAQhOSvlohpQhMDm1j544LwmwXnRbkh4uSak9AQO5IP2BeR7QKSEOwrE7hV8Ef5ZDCq9YPjb78=
+${$6$}$tdjohan$}$20240319104537302$}$8rAQhOSvlohpQhMDm1j544LwmwXnRbkhV2MZj9pTsXlSphwa9kaTy0gWmDVgKd6fYK5vr0Z3zzo=
 Program.Sub.Comments.End
