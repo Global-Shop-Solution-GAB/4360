@@ -485,6 +485,7 @@ F.Intrinsic.Control.EndIf
 Program.Sub.gvReq_ChangeValue.End
 
 Program.Sub.gvReq_Issue.Start
+F.Intrinsic.Control.BlockEvents
 V.Local.sQuery.Declare
 V.Local.bJobClosed.Declare(Boolean)
 
@@ -550,6 +551,7 @@ F.Intrinsic.Control.AndIf(V.DataTable.dtRequest(V.Args.RowIndex).Onhand!FieldVal
 	F.Intrinsic.Control.EndIf
 	F.ODBC.conx!rst.Close
 F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.UnBlockEvents
 Program.Sub.gvReq_Issue.End
 
 Program.Sub.IssueMaterial.Start
@@ -967,6 +969,7 @@ F.Intrinsic.Control.EndIf
 Program.Sub.gvLot_CheckBox.End
 
 Program.Sub.LotBin_Issue.Start
+F.Intrinsic.Control.BlockEvents
 V.Local.dIssued.Declare(Date)
 V.Local.fQtyIssued.Declare
 V.Local.fQtyRem.Declare
@@ -1256,9 +1259,11 @@ F.Intrinsic.Control.If(V.Local.fTotal,>,0)
 F.Intrinsic.Control.else
 	F.Intrinsic.UI.Msgbox("Please select lot/bin to continue","Issue Material Request [ARC 4360]")
 F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.UnBlockEvents
 Program.Sub.LotBin_Issue.End
 
 Program.Sub.LotBin_Cancel.Start
+F.Intrinsic.Control.BlockEvents
 V.Local.i1.Declare
 
 F.Intrinsic.Control.For(V.Local.i1,V.DataTable.dtLot.RowCount--,0,-1)
@@ -1269,6 +1274,7 @@ Gui.F_IssueRequest.GsGCRequest.SetRowAppearance("gvReq",V.Global.iReq,"backcolor
 Gui.F_IssueRequest.GsGCRequest.SetColumnProperty("gvReq","Issue","ReadOnly",False)
 Gui.F_IssueRequest.GsGCRequest.SetColumnProperty("gvReq","Issue","AllowEdit",True)
 Gui.F_IssueRequest.GsGCRequest.SetColumnProperty("gvReq","Submit","AllowEdit",False)
+F.Intrinsic.Control.UnBlockEvents
 Program.Sub.LotBin_Cancel.End
 
 Program.Sub.PrintAuditTrail.Start
@@ -1446,5 +1452,5 @@ Program.Sub.Comments.Start
 ${$0$}$Issue Material Request$}$MHERTANTO$}$20/6/2017 11:12:57 PM$}$True
 ${$3$}$0$}$$}$0$}$-1$}$$}$12:00:00 AM$}$This program is to be used by warehouse staff to process issue request made by production staffs. The request is submitted through another interface (GAB_4360_MATERIAL_REQUEST.g2u)
 ${$5$}$2.0.0.0$}$2
-${$6$}$dyunus$}$20240314110926029$}$xZ6SHi8g7O0Qsxe6AiO2NH3PnOKQRy0TsQ8KcKnknQS/8BLjCbwhI3OQhaA1W1F/RT7aXOvPeo0=
+${$6$}$dyunus$}$20240326095505082$}$xZ6SHi8g7O0Qsxe6AiO2NH3PnOKQRy0TDVI4Qa5ZrXgNhTqWjeIBAi5UtgeTRlHcfQ2Tl366TG4=
 Program.Sub.Comments.End
